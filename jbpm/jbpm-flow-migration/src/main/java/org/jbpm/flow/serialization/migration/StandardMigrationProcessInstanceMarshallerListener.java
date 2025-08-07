@@ -43,28 +43,32 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     @SuppressWarnings("deprecation")
     @Override
     public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance) {
-        if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
-            if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
-                LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
-                RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
-                ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
-            }
-            return;
-        }
-        LOGGER.debug("Migration processInstance state {}-{} and definition {}-{}",
-                processInstance.getProcessId(), processInstance.getProcessVersion(), processInstance.getProcess().getId(), processInstance.getProcess().getVersion());
-        migrationPlanService.migrateProcessElement(runtime.getApplication().get(Processes.class), processInstance);
-        runtime.getProcessEventSupport().fireOnMigration(processInstance, runtime.getKieRuntime());
+        // no-op
+        
+        // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
+        //     if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
+        //         LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
+        //         RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
+        //         ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
+        //     }
+        //     return;
+        // }
+        // LOGGER.debug("Migration processInstance state {}-{} and definition {}-{}",
+        //         processInstance.getProcessId(), processInstance.getProcessVersion(), processInstance.getProcess().getId(), processInstance.getProcess().getVersion());
+        // migrationPlanService.migrateProcessElement(runtime.getApplication().get(Processes.class), processInstance);
+        // runtime.getProcessEventSupport().fireOnMigration(processInstance, runtime.getKieRuntime());
 
     }
 
     @Override
     public void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance nodeInstance) {
-        if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {
-            return;
-        }
-        LOGGER.debug("Migration nodeInstance {}", nodeInstance);
-        migrationPlanService.migrateNodeElement(runtime.getApplication().get(Processes.class), nodeInstance);
+        // no-op
+
+        // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {
+        //     return;
+        // }
+        // LOGGER.debug("Migration nodeInstance {}", nodeInstance);
+        // migrationPlanService.migrateNodeElement(runtime.getApplication().get(Processes.class), nodeInstance);
     }
 
 }
