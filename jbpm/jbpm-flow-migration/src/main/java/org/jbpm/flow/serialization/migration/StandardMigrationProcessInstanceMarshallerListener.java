@@ -44,7 +44,7 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     @Override
     public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance) {
         // no-op
-        
+        System.out.println(" disabled afterUnmarshallProcess");
         // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
         //     if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
         //         LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
@@ -63,7 +63,7 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     @Override
     public void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance nodeInstance) {
         // no-op
-
+        System.out.println(" disabled afterUnmarshallNode");
         // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {
         //     return;
         // }
