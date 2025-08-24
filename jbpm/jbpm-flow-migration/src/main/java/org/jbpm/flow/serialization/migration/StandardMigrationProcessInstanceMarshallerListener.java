@@ -45,19 +45,19 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance) {
         // no-op
         System.out.println(" disabled afterUnmarshallProcess");
-        // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
-        //     if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
-        //         LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
-        //         RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
-        //         ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
-        //     }
-        //     return;
-        // }
-        // LOGGER.debug("Migration processInstance state {}-{} and definition {}-{}",
-        //         processInstance.getProcessId(), processInstance.getProcessVersion(), processInstance.getProcess().getId(), processInstance.getProcess().getVersion());
+        if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
+            if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
+                LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
+                System.out.println("migrating on GET");
+                // RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
+                // ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
+            }
+            return;
+        }
+        LOGGER.debug("Migration processInstance state {}-{} and definition {}-{}",
+                processInstance.getProcessId(), processInstance.getProcessVersion(), processInstance.getProcess().getId(), processInstance.getProcess().getVersion());
         // migrationPlanService.migrateProcessElement(runtime.getApplication().get(Processes.class), processInstance);
         // runtime.getProcessEventSupport().fireOnMigration(processInstance, runtime.getKieRuntime());
-
     }
 
     @Override
