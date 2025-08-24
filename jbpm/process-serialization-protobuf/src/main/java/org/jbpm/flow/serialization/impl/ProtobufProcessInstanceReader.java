@@ -183,6 +183,30 @@ public class ProtobufProcessInstanceReader {
             processInstance.setHeaders(headers);
         }
 
+        try {
+            LOGGER.info("getAllFields, {}", processInstanceProtobuf.getAllFields());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LOGGER.info("getHeadersList, {}", processInstanceProtobuf.getHeadersList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LOGGER.info("getHeaders", processInstanceProtobuf.getHeaders(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LOGGER.info("getHeadersCount", processInstanceProtobuf.getHeadersCount());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         WorkflowContext workflowContext = processInstanceProtobuf.getContext();
         buildWorkflowContext(processInstance, workflowContext);
 
