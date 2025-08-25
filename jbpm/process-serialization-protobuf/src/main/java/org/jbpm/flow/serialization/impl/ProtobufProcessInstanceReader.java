@@ -183,18 +183,11 @@ public class ProtobufProcessInstanceReader {
             processInstance.setHeaders(headers);
         }
 
-        try {
-            LOGGER.info("MARSHALLER_INSTANCE_READ_ONLY, {}", context.get(MarshallerContextName.MARSHALLER_INSTANCE_READ_ONLY));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         WorkflowContext workflowContext = processInstanceProtobuf.getContext();
         buildWorkflowContext(processInstance, workflowContext);
 
         KogitoProcessRuntime runtime = ((AbstractProcess<?>) context.get(MarshallerContextName.MARSHALLER_PROCESS)).getProcessRuntime();
-        Arrays.stream(listeners).forEach(e -> e.afterUnmarshallProcess(runtime, processInstance));
+        Arrays.stream(listeners).forEach(e -> e.afterUnmarshallProcess(runtime, processInstance, context.get(MarshallerContextName.MARSHALLER_INSTANCE_READ_ONLY)));
         return processInstance;
     }
 
@@ -255,7 +248,7 @@ public class ProtobufProcessInstanceReader {
 
             KogitoNodeInstance kogitoNodeInstance = (KogitoNodeInstance) result;
             KogitoProcessRuntime runtime = ((AbstractProcess<?>) context.get(MarshallerContextName.MARSHALLER_PROCESS)).getProcessRuntime();
-            Arrays.stream(listeners).forEach(e -> e.afterUnmarshallNode(runtime, kogitoNodeInstance));
+            Arrays.stream(listeners).forEach(e -> e.afterUnmarshallNode(runtime, kogitoNodeInstance, context.get(MarshallerContextName.MARSHALLER_INSTANCE_READ_ONLY)));
             return result;
         } catch (IOException e) {
             throw new IllegalArgumentException("Cannot read node instance content", e);

@@ -42,7 +42,7 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
 
     @SuppressWarnings("deprecation")
     @Override
-    public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance) {
+    public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance, Boolean isReadOnly) {
         // no-op
         System.out.println(" disabled afterUnmarshallProcess");
         if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
@@ -61,7 +61,7 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     }
 
     @Override
-    public void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance nodeInstance) {
+    public void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance nodeInstance, Boolean isReadOnly) {
         // no-op
         System.out.println(" disabled afterUnmarshallNode");
         // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {

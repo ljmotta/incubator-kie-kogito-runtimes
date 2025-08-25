@@ -24,19 +24,19 @@ import org.kie.kogito.internal.process.runtime.KogitoWorkflowProcessInstance;
 
 public interface ProcessInstanceMarshallerListener {
 
-    default void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance) {
+    default void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance, Boolean isReadOnly) {
 
     }
 
-    default void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance node) {
+    default void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance node, Boolean isReadOnly) {
 
     }
 
-    default void beforeMarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance node) {
+    default void beforeMarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance node, Boolean isReadOnly) {
 
     }
 
-    default void beforeMarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance node) {
+    default void beforeMarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance node, Boolean isReadOnly) {
 
     }
 
