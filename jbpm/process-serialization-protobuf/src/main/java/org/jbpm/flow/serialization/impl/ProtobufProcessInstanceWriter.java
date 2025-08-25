@@ -87,7 +87,7 @@ public class ProtobufProcessInstanceWriter {
         LOGGER.debug("writing process instance {}", workFlow.getId());
         AbstractProcess<?> process = ((AbstractProcess<?>) context.get(MarshallerContextName.MARSHALLER_PROCESS));
         KogitoProcessRuntime runtime = process.getProcessRuntime();
-        Arrays.stream(listeners).forEach(e -> e.beforeMarshallProcess(runtime, workFlow));
+        Arrays.stream(listeners).forEach(e -> e.beforeMarshallProcess(runtime, workFlow, context.get(MarshallerContextName.MARSHALLER_INSTANCE_READ_ONLY)));
 
         KogitoProcessInstanceProtobuf.ProcessInstance.Builder instance = KogitoProcessInstanceProtobuf.ProcessInstance.newBuilder()
                 .setId(workFlow.getStringId())
@@ -246,7 +246,7 @@ public class ProtobufProcessInstanceWriter {
 
     private Any buildNodeInstanceContent(NodeInstance nodeInstance) {
         KogitoProcessRuntime runtime = ((AbstractProcess<?>) context.get(MarshallerContextName.MARSHALLER_PROCESS)).getProcessRuntime();
-        Arrays.stream(listeners).forEach(e -> e.beforeMarshallNode(runtime, (KogitoNodeInstance) nodeInstance));
+        Arrays.stream(listeners).forEach(e -> e.beforeMarshallNode(runtime, (KogitoNodeInstance) nodeInstance, context.get(MarshallerContextName.MARSHALLER_INSTANCE_READ_ONLY)));
 
         NodeInstanceWriter writer = context.findNodeInstanceWriter(nodeInstance);
         if (writer == null) {
