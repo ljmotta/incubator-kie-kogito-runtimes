@@ -44,31 +44,28 @@ public class StandardMigrationProcessInstanceMarshallerListener implements Proce
     @Override
     public void afterUnmarshallProcess(KogitoProcessRuntime runtime, KogitoWorkflowProcessInstance processInstance, Boolean isReadOnly) {
         // no-op
-        System.out.println(" disabled afterUnmarshallProcess");
         if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), processInstance)) {
             if (!this.migrationPlanService.isEqualVersion(runtime.getApplication().get(Processes.class), processInstance)) {
                 LOGGER.debug("Process State version and process container mismatch. Migrating process without plan.");
-                System.out.println("migrating on GET");
-                // RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
-                // ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
+                RuleFlowProcessInstance ruleFlowProcessInstance = (RuleFlowProcessInstance) processInstance;
+                ruleFlowProcessInstance.setProcess(ruleFlowProcessInstance.getProcess());
             }
             return;
         }
         LOGGER.debug("Migration processInstance state {}-{} and definition {}-{}",
                 processInstance.getProcessId(), processInstance.getProcessVersion(), processInstance.getProcess().getId(), processInstance.getProcess().getVersion());
-        // migrationPlanService.migrateProcessElement(runtime.getApplication().get(Processes.class), processInstance);
-        // runtime.getProcessEventSupport().fireOnMigration(processInstance, runtime.getKieRuntime());
+        migrationPlanService.migrateProcessElement(runtime.getApplication().get(Processes.class), processInstance);
+        runtime.getProcessEventSupport().fireOnMigration(processInstance, runtime.getKieRuntime());
     }
 
     @Override
     public void afterUnmarshallNode(KogitoProcessRuntime runtime, KogitoNodeInstance nodeInstance, Boolean isReadOnly) {
         // no-op
-        System.out.println(" disabled afterUnmarshallNode");
-        // if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {
-        //     return;
-        // }
-        // LOGGER.debug("Migration nodeInstance {}", nodeInstance);
-        // migrationPlanService.migrateNodeElement(runtime.getApplication().get(Processes.class), nodeInstance);
+        if (!migrationPlanService.hasMigrationPlan(runtime.getApplication().get(Processes.class), (KogitoWorkflowProcessInstance) nodeInstance.getProcessInstance())) {
+            return;
+        }
+        LOGGER.debug("Migration nodeInstance {}", nodeInstance);
+        migrationPlanService.migrateNodeElement(runtime.getApplication().get(Processes.class), nodeInstance);
     }
 
 }
