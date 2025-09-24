@@ -20,11 +20,9 @@ package org.jbpm.flow.serialization.migration;
 
 import org.jbpm.flow.migration.MigrationPlanService;
 import org.jbpm.flow.serialization.ProcessInstanceMarshallerListener;
-import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
 import org.kie.kogito.internal.process.runtime.KogitoNodeInstance;
 import org.kie.kogito.internal.process.runtime.KogitoProcessRuntime;
 import org.kie.kogito.internal.process.runtime.KogitoWorkflowProcessInstance;
-import org.kie.kogito.process.Processes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
